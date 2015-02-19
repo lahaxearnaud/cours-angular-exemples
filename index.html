@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Example 2</title>
+    <!-- Inclusion de la lib angular-->
+    <script src="bower_components/angular/angular.js"></script>
+
+    <script>
+        // creation de lu module angular
+        var app = angular.module('exampleApp', []);
+
+        // creation du controleur
+        app.controller('exampleCtrl', function($scope) {
+            // on peut aussi mettre des fonctions dans le scope
+            $scope.launchAtomicBomb = function () {
+                alert('Booom !');
+            }
+        });
+
+        app.directive('confirmationButton', function() {
+            return {
+                restrict: 'E',
+                template: '<button>Lancer !</button> ',
+                link: function (scope, element, attributes) {
+                    var action = attributes.action;
+                    var msg = attributes.message || 'Continuer ?';
+
+                    element.bind('click', function (event) {
+                        if(window.confirm(msg)) {
+                            scope.$eval(action);
+                        }
+                    });
+                }
+            };
+        });
+    </script>
+</head>
+<!-- Creation de l'app angular-->
+<body ng-app="exampleApp">
+<!-- Appel du controleur -->
+<section ng-controller="exampleCtrl">
+    <h2>Example 2</h2>
+
+    <!-- spinal case ici mais camel case dans le nom de la directive -->
+    <confirmation-button action="launchAtomicBomb()" message="L'opération est irréversible. Continuer ?"></confirmation-button>
+    <confirmation-button action="launchAtomicBomb()"></confirmation-button>
+
+</section>
+</body>
+</html>
