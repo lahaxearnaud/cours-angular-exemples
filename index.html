@@ -5,16 +5,29 @@
     <title>Example 1</title>
     <!-- Inclusion de la lib angular-->
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-hotkeys/build/hotkeys.js"></script>
+    <link rel="stylesheet" href="bower_components/angular-hotkeys/build/hotkeys.css"/>
 
     <script>
         // creation de lu module angular
-        var app = angular.module('exampleApp', []);
+        var app = angular.module('exampleApp', ['cfp.hotkeys']);
 
         // creation du controleur
-        app.controller('exampleCtrl', function($scope) {
-            // ajout de variable dans le scope
-            $scope.price = 0;
-            $scope.taxeRate = 0.2;
+        app.controller('exampleCtrl', function($scope, hotkeys) {
+            $scope.value = 0;
+            hotkeys.add({
+               combo: 'alt+up',
+               callback: function() {
+                   $scope.value ++;
+               }
+            });
+
+            hotkeys.add({
+                combo: 'alt+down',
+                callback: function() {
+                    $scope.value --;
+                }
+            });
         });
     </script>
 </head>
@@ -24,22 +37,7 @@
     <section ng-controller="exampleCtrl">
         <h2>Example 1</h2>
 
-        <div>
-            <label>Prix HT:</label>
-            <!-- bind de l'input et de la variable price du scope courant -->
-            <input type="text" ng-model="price"/>
-        </div>
-
-        <div>
-            <!-- affichage d'une variable -->
-            <label>Taxe {{ taxeRate * 100 }}%:</label>
-            <span>{{ price * taxeRate }}</span>
-        </div>
-
-        <div>
-            <label>Montant TTC:</label>
-            <span>{{ price * (1 + taxeRate) }}</span>
-        </div>
+        valeur :  {{ value }}
     </section>
 </body>
 </html>
