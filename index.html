@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Example 5</title>
+    <title>Example 8</title>
     <!-- Inclusion de la lib angular-->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
@@ -49,7 +49,7 @@
                 });
         });
 
-        app.factory('UserService', function () {
+        app.provider('UserService', function () {
             var personnes = {
                 1:{
                     "name": "Margo Ferguson"
@@ -68,25 +68,27 @@
                 }
             };
 
-            return {
-                list: function() {
-                    return personnes;
-                },
+            this.$get = function() {
+                return {
+                    list: function () {
+                        return personnes;
+                    },
 
-                find: function (id) {
-                    return personnes[id];
-                },
+                    find: function (id) {
+                        return personnes[id];
+                    },
 
-                delete: function (id) {
-                    delete personnes[id];
-                },
+                    delete: function (id) {
+                        delete personnes[id];
+                    },
 
-                create: function (data) {
-                    // just for demo
-                    var id = (Math.random() + '').replace('0.', '');
-                    personnes[id] = data;
+                    create: function (data) {
+                        // just for demo
+                        var id = (Math.random() + '').replace('0.', '');
+                        personnes[id] = data;
+                    }
                 }
-            }
+            };
         });
 
     </script>
@@ -95,7 +97,7 @@
 <body ng-app="exampleApp">
     <!-- Appel du controleur -->
     <section>
-        <h2>Example 5</h2>
+        <h2>Example 8</h2>
 
         <div ng-view></div>
 
