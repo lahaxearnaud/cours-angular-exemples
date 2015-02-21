@@ -40,6 +40,15 @@
             ];
         });
 
+        app.filter('capitalize', function() {
+            return function(input) {
+                input = input.toLowerCase().split(" ").map(function(i){
+                    return i[0].toUpperCase() + i.substring(1);
+                }).join(" ");
+
+                return input[0].toUpperCase() + input.slice(1);
+            };
+        })
 
     </script>
 </head>
@@ -68,7 +77,7 @@
         <input type="text" ng-model="search.company"/>
 
         <ul ng-repeat="personne in personnes | filter:search">
-            <li>{{ personne.name }} de {{ personne.company }}</li>
+            <li>{{ personne.name | capitalize }} de {{ personne.company | capitalize }}</li>
         </ul>
 
     </section>
