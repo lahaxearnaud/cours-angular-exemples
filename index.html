@@ -12,15 +12,31 @@
         var app = angular.module('exampleApp', ['ngRoute']);
 
         // creation du controleur
-        app.controller('homeCtrl', function($scope) {
-            $scope.title = 'Title';
-            $scope.content = 'Maecenas nibh tellus, pretium a pretium ac, hendrerit a ipsum. Praesent rutrum feugiat ex. Mauris vitae rhoncus neque. In sem est, bibendum sit amet arcu in, imperdiet semper mauris. Proin ultricies dignissim mauris vel euismod. Donec pharetra efficitur enim at efficitur. Mauris viverra enim id mi ultrices, non condimentum lacus vestibulum.';
+        app.controller('homeCtrl', function($scope, UserService) {
+            $scope.personnes = UserService.list();
+
+            $scope.me = UserService.find(1);
+
+
+            $scope.personnesAfterDelete = UserService.list();
+
+
+            $scope.delete = function(id) {
+                UserService.delete(id);
+            };
+
+            $scope.formData = {
+                name: ''
+            };
+
+            $scope.create = function() {
+                UserService.create($scope.formData);
+                $scope.formData = {
+                    name: ''
+                };
+            };
         });
 
-        app.controller('fooCtrl', function($scope) {
-            $scope.title = 'Fooo';
-            $scope.content = 'Barrr';
-        });
 
         app.config(function($routeProvider) {
             $routeProvider
@@ -28,14 +44,51 @@
                     templateUrl: 'views/home.html',
                     controller: 'homeCtrl'
                 })
-                .when('/foo', {
-                    templateUrl: 'views/home.html',
-                    controller: 'fooCtrl'
-                })
                 .otherwise({
                     redirectTo: '/home'
                 });
         });
+
+        app.factory('UserService', function () {
+            var personnes = {
+                1:{
+                    "name": "Margo Ferguson"
+                },
+                2:{
+                    "name": "Lucas Barnett"
+                },
+                3:{
+                    "name": "Dickerson Sharpe"
+                },
+                4:{
+                    "name": "Dollie Michael"
+                },
+                5:{
+                    "name": "Winters Salinas"
+                }
+            };
+
+            return {
+                list: function() {
+                    return personnes;
+                },
+
+                find: function (id) {
+                    return personnes[id];
+                },
+
+                delete: function (id) {
+                    delete personnes[id];
+                },
+
+                create: function (data) {
+                    // just for demo
+                    var id = (Math.random() + '').replace('0.', '');
+                    personnes[id] = data;
+                }
+            }
+        });
+
     </script>
 </head>
 <!-- Creation de l'app angular-->
