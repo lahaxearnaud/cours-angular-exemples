@@ -15,7 +15,14 @@
             // ajout de variable dans le scope
             $scope.price = 0;
             $scope.taxeRate = 0.2;
+
+            $scope.$watch('price', function (price) {
+               if(price >= 10000) {
+                   console.log('Offrir un café au client.');
+               }
+            });
         });
+
     </script>
 </head>
 <!-- Creation de l'app angular-->
