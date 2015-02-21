@@ -2,83 +2,49 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Example 4</title>
+    <title>Example 5</title>
     <!-- Inclusion de la lib angular-->
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
 
     <script>
         // creation de lu module angular
-        var app = angular.module('exampleApp', []);
+        var app = angular.module('exampleApp', ['ngRoute']);
 
         // creation du controleur
-        app.controller('exampleCtrl', function($scope) {
-
-            $scope.name = 'paul';
-            $scope.timestamp = Date.now();
-            $scope.price = 12000;
-            $scope.personnes = [
-                {
-                    "name": "Audrey Johns",
-                    "company": "SUREMAX"
-                },
-                {
-                    "name": "Rosales Brennan",
-                    "company": "MAXEMIA"
-                },
-                {
-                    "name": "Nina Lott",
-                    "company": "SEQUITUR"
-                },
-                {
-                    "name": "Robyn Emerson",
-                    "company": "LUMBREX"
-                },
-                {
-                    "name": "Norman Jones",
-                    "company": "ZOUNDS"
-                }
-            ];
+        app.controller('homeCtrl', function($scope) {
+            $scope.title = 'Title';
+            $scope.content = 'Maecenas nibh tellus, pretium a pretium ac, hendrerit a ipsum. Praesent rutrum feugiat ex. Mauris vitae rhoncus neque. In sem est, bibendum sit amet arcu in, imperdiet semper mauris. Proin ultricies dignissim mauris vel euismod. Donec pharetra efficitur enim at efficitur. Mauris viverra enim id mi ultrices, non condimentum lacus vestibulum.';
         });
 
-        app.filter('capitalize', function() {
-            return function(input) {
-                input = input.toLowerCase().split(" ").map(function(i){
-                    return i[0].toUpperCase() + i.substring(1);
-                }).join(" ");
+        app.controller('fooCtrl', function($scope) {
+            $scope.title = 'Fooo';
+            $scope.content = 'Barrr';
+        });
 
-                return input[0].toUpperCase() + input.slice(1);
-            };
-        })
-
+        app.config(function($routeProvider) {
+            $routeProvider
+                .when('/home', {
+                    templateUrl: 'views/home.html',
+                    controller: 'homeCtrl'
+                })
+                .when('/foo', {
+                    templateUrl: 'views/home.html',
+                    controller: 'fooCtrl'
+                })
+                .otherwise({
+                    redirectTo: '/home'
+                });
+        });
     </script>
 </head>
 <!-- Creation de l'app angular-->
 <body ng-app="exampleApp">
     <!-- Appel du controleur -->
-    <section ng-controller="exampleCtrl">
-        <h2>Example 4</h2>
+    <section>
+        <h2>Example 5</h2>
 
-        <h3></h3>
-        <ul>
-            <li>{{ name | uppercase}}</li>
-            <li>{{ timestamp | date:'dd-MM-yyyy'}}</li>
-            <li>{{ price | currency }}</li>
-            <li>{{ price | number }}</li>
-        </ul>
-
-        <h3>Search</h3>
-        <label>Tous</label>
-        <input type="text" ng-model="search.$"/>
-
-        <label>Name</label>
-        <input type="text" ng-model="search.name"/>
-
-        <label>Company</label>
-        <input type="text" ng-model="search.company"/>
-
-        <ul ng-repeat="personne in personnes | filter:search">
-            <li>{{ personne.name | capitalize }} de {{ personne.company | capitalize }}</li>
-        </ul>
+        <div ng-view></div>
 
     </section>
 </body>
