@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Example 1</title>
+    <title>Example 4</title>
     <!-- Inclusion de la lib angular-->
     <script src="bower_components/angular/angular.js"></script>
 
@@ -12,34 +12,65 @@
 
         // creation du controleur
         app.controller('exampleCtrl', function($scope) {
-            // ajout de variable dans le scope
-            $scope.price = 0;
-            $scope.taxeRate = 0.2;
+
+            $scope.name = 'paul';
+            $scope.timestamp = Date.now();
+            $scope.price = 12000;
+            $scope.personnes = [
+                {
+                    "name": "Audrey Johns",
+                    "company": "SUREMAX"
+                },
+                {
+                    "name": "Rosales Brennan",
+                    "company": "MAXEMIA"
+                },
+                {
+                    "name": "Nina Lott",
+                    "company": "SEQUITUR"
+                },
+                {
+                    "name": "Robyn Emerson",
+                    "company": "LUMBREX"
+                },
+                {
+                    "name": "Norman Jones",
+                    "company": "ZOUNDS"
+                }
+            ];
         });
+
+
     </script>
 </head>
 <!-- Creation de l'app angular-->
 <body ng-app="exampleApp">
     <!-- Appel du controleur -->
     <section ng-controller="exampleCtrl">
-        <h2>Example 1</h2>
+        <h2>Example 4</h2>
 
-        <div>
-            <label>Prix HT:</label>
-            <!-- bind de l'input et de la variable price du scope courant -->
-            <input type="text" ng-model="price"/>
-        </div>
+        <h3></h3>
+        <ul>
+            <li>{{ name | uppercase}}</li>
+            <li>{{ timestamp | date:'dd-MM-yyyy'}}</li>
+            <li>{{ price | currency }}</li>
+            <li>{{ price | number }}</li>
+        </ul>
 
-        <div>
-            <!-- affichage d'une variable -->
-            <label>Taxe {{ taxeRate * 100 }}%:</label>
-            <span>{{ price * taxeRate }}</span>
-        </div>
+        <h3>Search</h3>
+        <label>Tous</label>
+        <input type="text" ng-model="search.$"/>
 
-        <div>
-            <label>Montant TTC:</label>
-            <span>{{ price * (1 + taxeRate) }}</span>
-        </div>
+        <label>Name</label>
+        <input type="text" ng-model="search.name"/>
+
+        <label>Company</label>
+        <input type="text" ng-model="search.company"/>
+
+        <ul ng-repeat="personne in personnes | filter:search">
+            <li>{{ personne.name }} de {{ personne.company }}</li>
+        </ul>
+
     </section>
 </body>
 </html>
