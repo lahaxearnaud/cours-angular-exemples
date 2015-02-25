@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form ng-submit="delete()" ng-show="displayForm">
+            <p>
+                Supprimer le contact {{ contact.firstname }} {{ contact.name }}
+            </p>
+
+            <button type="submit" class="btn brn-danger">Supprimer</button>
+        </form>
+
+        <div ng-show="!displayForm">
+            <div class="alert alert-success" role="alert">
+                Contact mis à jour <a href="#/home">liste</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<label>Tout</label>
+<input type="text" ng-model="search.$"/>
+
+<label>Prenom</label>
+<input type="text" ng-model="search.firstname"/>
+
+<code>
+{{ contacts }}
+</code>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Image</th>
+        <th>Prenom</th>
+        <th>Nom</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tr ng-repeat="(id, contact) in contacts | filter:search | orderBy:'firstname'">
+        <td>{{ id }}</td>
+        <td><img ng-src="{{ contact.picture }}"/></td>
+        <td>{{ contact.firstname }}</td>
+        <td>{{ contact.name | uppercase }}</td>
+        <td>{{ contact.age }}</td>
+        <td><email/></td>
+        <td><a href="#/edit/{{ id }}">Editer</a></td>
+        <td><a href="#/delete/{{ id }}">Delete</a></td>
+    </tr>
+</table>
